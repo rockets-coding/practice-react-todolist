@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
-import { useRoutes, Link, Outlet } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+// #TODO:
+// eslint-disable-next-line object-curly-newline
+import { useRoutes, useNavigate } from 'react-router-dom';
 
 import AuthContext from './contexts/AuthContext';
 
+import Layout from './pages/Layout';
 import PageNotFound from './pages/PageNotFound';
 import PageHome from './pages/PageHome';
 import PageSignup from './pages/PageSignup';
@@ -11,41 +14,41 @@ import PageLogin from './pages/PageLogin';
 import PageTodos from './pages/PageTodos';
 import PageDev from './pages/PageDev';
 import RouteNeedAuth from './pages/RouteNeedAuth';
-
-function Layout() {
-  return (
-    <>
-      <nav>
-        <ul className="text-blue">
-          <li>
-            <Link to="/">HOME</Link>
-          </li>
-          <li>
-            <Link to="/signup">SIGN-UP</Link>
-          </li>
-          <li>
-            <Link to="/login">LOG-IN</Link>
-          </li>
-          <li>
-            <Link to="/todos">TODOS</Link>
-          </li>
-          <li>
-            <Link to="dev">Dev</Link>
-          </li>
-          <li>
-            <Link to="idontknowwheretogo">404</Link>
-          </li>
-        </ul>
-      </nav>
-      <hr className="h-2 bg-slate-300" />
-
-      <Outlet />
-    </>
-  );
-}
+/* end of import */
 
 function App() {
-  const [token, setToken] = useState(null);
+  const navigate = useNavigate();
+
+  const [token, setToken] = useState(() => {
+    const loadToken = localStorage.getItem('TOKEN');
+    return loadToken || null;
+  });
+
+  const apiTestCheck = () => {
+    // console.log('#TODO-API: fetch()', localToken);
+    /**
+     * #TODO:
+     * if (res.ok)
+     */
+    setToken(token);
+    // setToken(loadToken);
+    navigate('/todos');
+    // IF(!) navigate('/');
+  };
+  /* end of apiTestCheck() */
+
+  useEffect(() => {
+    // console.log('render1-loadToken::', token);
+    if (token) {
+      console.log('#TODO: API-TestCheck()');
+      apiTestCheck();
+    }
+
+    return () => {
+      // console.log('#TODO: return clear');
+    };
+  }, []);
+  /* end of useEffect() */
 
   const routesConfig = useRoutes([
     {
@@ -84,13 +87,21 @@ function App() {
       ],
     },
   ]);
+  /* end of useRoutes() */
 
   // return routesConfig;
   return (
-    <AuthContext.Provider value={(token, setToken)}>
+    <AuthContext.Provider value={{ token, setToken }}>
+      {/* <AuthContext.Provider value={{ token, setToken }}> */}
+      {/* #TODO:
+       * The object passed as the value prop
+       *   to the Context provider (at line 90) changes every render.
+       * To fix this consider wrapping it in a useMemo hook.
+       */}
       {routesConfig}
     </AuthContext.Provider>
   );
 }
+/* end of App() */
 
 export default App;
