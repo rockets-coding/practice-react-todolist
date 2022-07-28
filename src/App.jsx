@@ -20,7 +20,7 @@ function App() {
   const navigate = useNavigate();
 
   const [token, setToken] = useState(() => {
-    const loadToken = localStorage.getItem('TOKEN');
+    const loadToken = localStorage.getItem('AUTH_TOKEN');
     return loadToken || null;
   });
 
@@ -30,7 +30,7 @@ function App() {
      * #TODO:
      * if (res.ok)
      */
-    setToken(token);
+    // setToken(token);
     // setToken(loadToken);
     navigate('/todos');
     // IF(!) navigate('/');
