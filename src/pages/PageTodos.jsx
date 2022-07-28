@@ -10,26 +10,48 @@ function PageTodos() {
   const { token, setToken } = useAuth();
   const [todosData, setTodosData] = useState([]);
   const [modifyTime, setModifyTime] = useState('');
-  const [tabType, setTabType] = useState('');
+  const [tabType, setTabType] = useState('ALL');
+  const [inputValue, setInputValue] = useState('');
 
-  const todo = {
-    content: `UPDATE-${new Date().toISOString()}`,
-  };
+  // const todo = {
+  //   content: `UPDATE-${new Date().toISOString()}`,
+  // };
 
   // eslint-disable-next-line consistent-return
-  const modifyTodo = (id, buttonType) => {
+  const modifyTodo = (id, buttonType, todo) => {
     // #NOTE:
     // ESLint: Expected to return a value at the end of arrow function.
     console.log('modifyTodo:::', id, buttonType);
     // #TODO: API
 
-    if (buttonType === 'EDIT') {
+    if (buttonType === 'SAVE') {
+      console.log('SAVE-todo', todo);
+
       apis.todosPut({ token, id, todo }).then((res) => {
         console.log(res);
         // #TODO: if(res.ok)
 
         setModifyTime(Date.now());
       });
+    }
+
+    if (buttonType === 'EDIT') {
+      const targetTodo = todosData.filter((filterItem) => {
+        console.log(filterItem.content);
+        return filterItem.id === id;
+      });
+
+      console.log(targetTodo[0].content);
+      // const todo = {
+      //   content: `UPDATE-${new Date().toISOString()}`,
+      // };
+
+      // apis.todosPut({ token, id, todo }).then((res) => {
+      //   console.log(res);
+      //   // #TODO: if(res.ok)
+
+      //   setModifyTime(Date.now());
+      // });
 
       return console.log(buttonType);
     }
@@ -59,9 +81,10 @@ function PageTodos() {
 
   const handleTab = (e) => {
     const buttonType = e.target.dataset.buttontype;
-    console.log('buttonTypeTab::', buttonType, tabType);
+    console.log('--beforeTab::', tabType);
+    console.log('buttonTypeTab::', buttonType);
+
     // return modifyTodo(buttonType);
-    // #TODO: #WIP: send to map()
     setTabType(buttonType);
   };
 
@@ -81,6 +104,38 @@ function PageTodos() {
   return (
     <>
       <header>
+        <p>{inputValue}</p>
+        <input
+          value={inputValue}
+          type="text"
+          name=""
+          id=""
+          className="bg-yellow-200"
+          onChange={(e) => {
+            console.log(e.target.value);
+            setInputValue(e.target.value);
+          }}
+        />
+        <input
+          value="ADD"
+          type="button"
+          className="m-2 rounded  bg-[#333] px-2 py-1 text-white"
+          onClick={() => {
+            console.log(inputValue);
+            console.log('ADD-check-Token::', token);
+
+            const todo = {
+              content: inputValue,
+            };
+
+            apis.todosPost({ token, todo }).then((res) => {
+              console.log(res);
+              setModifyTime(Date.now());
+              setInputValue('');
+            });
+          }}
+        />
+        <hr />
         <ul>
           <li>
             <input
@@ -117,14 +172,17 @@ function PageTodos() {
            * Do not use Array index in keys
            */}
           {console.log('DATA-LENGTH:::', todosData.length)}
+
           {todosData.map((todoItem) => {
             console.log('DATA-MAP:::');
+            console.log('MAP-TAB:::', tabType);
 
             return (
               <TodoItems
                 key={todoItem.id}
-                todo={todoItem}
+                todoItem={todoItem}
                 modifyTodo={modifyTodo}
+                tabType={tabType}
               />
             );
             // return <TodoItems key={todo.id} {...todo} />;

@@ -26,6 +26,12 @@ function App() {
 
   const apiTestCheck = () => {
     // console.log('#TODO-API: fetch()', localToken);
+
+    // apis.testCheck({ token }).then((res) => {
+    //   console.log(res);
+    //   navigate('/todos');
+    // });
+
     /**
      * #TODO:
      * if (res.ok)

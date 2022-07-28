@@ -202,6 +202,7 @@ function PageDev() {
               console.log(res);
 
               removeToken(res);
+              navigate('/');
             });
           }}
         />
