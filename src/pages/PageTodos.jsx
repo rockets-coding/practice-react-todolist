@@ -3,14 +3,18 @@ import { useNavigate } from 'react-router-dom';
 
 import useAuth from '../hooks/useAuth';
 import apis from '../helpers/apis';
+
 import TodoItems from '../components/TodoItems';
 
 function PageTodos() {
   const navigate = useNavigate();
+
   const { token, setToken } = useAuth();
   const [todosData, setTodosData] = useState([]);
+
   const [modifyTime, setModifyTime] = useState('');
   const [tabType, setTabType] = useState('ALL');
+
   const [inputValue, setInputValue] = useState('');
 
   // const todo = {
@@ -105,6 +109,7 @@ function PageTodos() {
     <>
       <header>
         <p>{inputValue}</p>
+        {/* #TODO: export it */}
         <input
           value={inputValue}
           type="text"
@@ -177,12 +182,20 @@ function PageTodos() {
             console.log('DATA-MAP:::');
             console.log('MAP-TAB:::', tabType);
 
+            const todoItemType = todoItem.completed ? 'DONE' : 'ACTIVE';
+            console.log('Item-tabType::', tabType);
+            console.log('Item-todoItemType::', todoItemType);
+
+            if (tabType !== 'ALL' && tabType !== todoItemType) {
+              return null;
+            }
+
             return (
               <TodoItems
                 key={todoItem.id}
                 todoItem={todoItem}
                 modifyTodo={modifyTodo}
-                tabType={tabType}
+                // tabType={tabType}
               />
             );
             // return <TodoItems key={todo.id} {...todo} />;

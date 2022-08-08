@@ -2,43 +2,45 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import useAuth from '../hooks/useAuth';
+import PageLogin from './PageLogin';
 
 function PageHome() {
   const navigate = useNavigate();
   const { token, setToken } = useAuth();
 
-  const saveToken = (TOKEN) => {
-    setToken(TOKEN);
-    localStorage.setItem('TOKEN', TOKEN);
-  };
-  /* end of saveToken('') */
+  // const saveToken = (TOKEN) => {
+  //   setToken(TOKEN);
+  //   localStorage.setItem('TOKEN', TOKEN);
+  // };
+  // /* end of saveToken('') */
 
-  const onLogin = () => {
-    /**
-     * #TODO:
-     * - if (res.ok)
-     */
-    const TOKEN = '1234';
+  // const onLogin = () => {
+  //   /**
+  //    * #TODO:
+  //    * - if (res.ok)
+  //    */
+  //   const TOKEN = '1234';
 
-    saveToken(TOKEN);
-    navigate('/todos');
-  };
-  /* end of onLogin() */
+  //   saveToken(TOKEN);
+  //   navigate('/todos');
+  // };
+  // /* end of onLogin() */
 
-  const onSignup = () => {
-    const TOKEN = '1234';
+  // const onSignup = () => {
+  //   const TOKEN = '1234';
 
-    saveToken(TOKEN);
-    navigate('/todos');
-  };
-  /* end of onSignup() */
+  //   saveToken(TOKEN);
+  //   navigate('/todos');
+  // };
+  // /* end of onSignup() */
 
   if (!token) {
     return (
       <>
         <p className="text-orange-500">!Not Allow!</p>
+        <PageLogin />
 
-        <button
+        {/* <button
           type="button"
           className="my-6 rounded bg-[#333] px-4 py-2 text-white transition-all hover:bg-gray-200"
           onClick={onLogin}
@@ -52,7 +54,7 @@ function PageHome() {
           onClick={onSignup}
         >
           SIGN-UP
-        </button>
+        </button> */}
       </>
     );
   }

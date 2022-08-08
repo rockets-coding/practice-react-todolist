@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRoutes, useNavigate } from 'react-router-dom';
 
 import AuthContext from './contexts/AuthContext';
+import apis from './helpers/apis';
 
 import Layout from './pages/Layout';
 import PageNotFound from './pages/PageNotFound';
@@ -24,30 +25,21 @@ function App() {
     return loadToken || null;
   });
 
-  const apiTestCheck = () => {
-    // console.log('#TODO-API: fetch()', localToken);
-
-    // apis.testCheck({ token }).then((res) => {
-    //   console.log(res);
-    //   navigate('/todos');
-    // });
-
-    /**
-     * #TODO:
-     * if (res.ok)
-     */
-    // setToken(token);
-    // setToken(loadToken);
-    navigate('/todos');
-    // IF(!) navigate('/');
-  };
-  /* end of apiTestCheck() */
-
   useEffect(() => {
     // console.log('render1-loadToken::', token);
     if (token) {
       console.log('#TODO: API-TestCheck()');
-      apiTestCheck();
+
+      apis.testCheck({ token }).then((res) => {
+        console.log(res);
+
+        navigate('/todos');
+        /**
+         * #TODO:
+         * if (res.ok)
+         */
+        // IF(!) navigate('/');
+      });
     }
 
     return () => {

@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 // #REVIEW: ESLint
 // #FIXME: prop-types
 // eslint-disable-next-line react/prop-types
-function TodoItems({ todoItem, modifyTodo, tabType }) {
+function TodoItems({ todoItem, modifyTodo }) {
+  // function TodoItems({ todoItem, modifyTodo, tabType }) {
   const [inputValue, setInputValue] = useState('');
   const [isEdit, setIsEdit] = useState(false);
 
@@ -15,13 +16,13 @@ function TodoItems({ todoItem, modifyTodo, tabType }) {
   // eslint-disable-next-line react/prop-types, camelcase
   const { id, content, completed_at: completed } = todoItem;
 
-  const todoItemType = completed ? 'DONE' : 'ACTIVE';
-  console.log('Item-tabType::', tabType);
-  console.log('Item-todoItemType::', todoItemType);
+  // const todoItemType = completed ? 'DONE' : 'ACTIVE';
+  // console.log('Item-tabType::', tabType);
+  // console.log('Item-todoItemType::', todoItemType);
 
-  if (tabType !== 'ALL' && tabType !== todoItemType) {
-    return null;
-  }
+  // if (tabType !== 'ALL' && tabType !== todoItemType) {
+  //   return null;
+  // }
 
   const handleTodoItem = (e) => {
     const buttonType = e.target.dataset.buttontype;

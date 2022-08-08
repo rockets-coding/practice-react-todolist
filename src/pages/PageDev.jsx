@@ -80,12 +80,11 @@ function PageDev() {
     <div className="text-center selection:bg-green-900">
       <p>{JSON.stringify(null, 2, devLog)}</p>
       {/* <p>{devLog}</p> */}
-
       <header className="container">
         <input
           value="GET"
           type="button"
-          className="m-2 rounded bg-[#6AF] py-2 px-3 text-center text-xs font-medium text-white transition-all hover:bg-gray-200"
+          className="m-2 rounded bg-[#6AF] py-2 px-3 text-center text-xs font-bold text-white transition-all hover:bg-gray-200"
           onClick={() => {
             console.log('check-Token::', token);
 
@@ -98,7 +97,7 @@ function PageDev() {
         <input
           value="POST"
           type="button"
-          className="m-2 rounded bg-[#4C9] py-2 px-3 text-center text-xs font-medium text-white transition-all hover:bg-gray-200"
+          className="m-2 rounded bg-[#4C9] py-2 px-3 text-center text-xs font-bold text-white transition-all hover:bg-gray-200"
           onClick={() => {
             console.log('check-Token::', token);
 
@@ -111,7 +110,7 @@ function PageDev() {
         <input
           value="PUT"
           type="button"
-          className="m-2 rounded bg-[#4C9] py-2 px-3 text-center text-xs font-medium text-white transition-all hover:bg-gray-200"
+          className="m-2 rounded bg-[#FA3] py-2 px-3 text-center text-xs font-bold text-white transition-all hover:bg-gray-200"
           onClick={() => {
             console.log('check-Token::', token);
 
@@ -124,7 +123,7 @@ function PageDev() {
         <input
           value="DELETE"
           type="button"
-          className="m-2 rounded bg-[#F33] py-2 px-3 text-center text-xs font-medium text-white transition-all hover:bg-gray-200"
+          className="m-2 rounded bg-[#F33] py-2 px-3 text-center text-xs font-bold text-white transition-all hover:bg-gray-200"
           onClick={() => {
             console.log('check-Token::', token);
 
@@ -137,7 +136,7 @@ function PageDev() {
         <input
           value="TOGGLE"
           type="button"
-          className="m-2 rounded bg-[#4C9] py-2 px-3 text-center text-xs font-medium text-white transition-all hover:bg-gray-200"
+          className="m-2 rounded bg-[#5EC] py-2 px-3 text-center text-xs font-bold text-white opacity-70 transition-all hover:bg-gray-200"
           onClick={() => {
             console.log('check-Token::', token);
 
@@ -152,7 +151,7 @@ function PageDev() {
         <input
           value="CHECK"
           type="button"
-          className="m-2 rounded bg-[#6AF] py-2 px-3 text-center text-xs font-medium text-white transition-all hover:bg-gray-200"
+          className="m-2 rounded bg-[#6AF] py-2 px-3 text-center text-xs font-bold text-white transition-all hover:bg-gray-200"
           onClick={() => {
             console.log('check-Token::', token);
 
@@ -166,7 +165,7 @@ function PageDev() {
         <input
           value="SIGN-UP"
           type="button"
-          className="m-2 rounded bg-[#4C9] py-2 px-3 text-center text-xs font-medium text-white transition-all hover:bg-gray-200"
+          className="m-2 rounded bg-[#4C9] py-2 px-3 text-center text-xs font-bold text-white transition-all hover:bg-gray-200"
           onClick={() => {
             apis.usersSignUp({ user }).then((res) => {
               console.log(res);
@@ -178,7 +177,7 @@ function PageDev() {
 
         <button
           type="button"
-          className="m-2 rounded bg-[#4C9] py-2 px-3 text-center text-xs font-medium text-white transition-all hover:bg-gray-200"
+          className="m-2 rounded bg-[#4C9] py-2 px-3 text-center text-xs font-bold text-white transition-all hover:bg-gray-200"
           onClick={() => {
             apis.usersSignIn({ user }).then((res) => {
               console.log(res);
@@ -194,7 +193,7 @@ function PageDev() {
         <input
           value="SIGN-OUT"
           type="button"
-          className="m-2 rounded bg-[#F33] py-2 px-3 text-center text-xs font-medium text-white transition-all hover:bg-gray-200"
+          className="m-2 rounded bg-[#F33] py-2 px-3 text-center text-xs font-bold text-white transition-all hover:bg-gray-200"
           onClick={() => {
             console.log('check-Token::', token);
 
