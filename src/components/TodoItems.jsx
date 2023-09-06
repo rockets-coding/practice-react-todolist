@@ -3,10 +3,13 @@ import React, { useState } from 'react';
 // #REVIEW: ESLint
 // #FIXME: prop-types
 // eslint-disable-next-line react/prop-types
-function TodoItems({ todoItem, modifyTodo }) {
-  // function TodoItems({ todoItem, modifyTodo, tabType }) {
+function TodoItems({ todoItem, modifyTodo, tabType }) {
   const [inputValue, setInputValue] = useState('');
   const [isEdit, setIsEdit] = useState(false);
+
+  if (!todoItem) {
+    return null;
+  }
 
   /**
    * #NOTE:
@@ -16,13 +19,11 @@ function TodoItems({ todoItem, modifyTodo }) {
   // eslint-disable-next-line react/prop-types, camelcase
   const { id, content, completed_at: completed } = todoItem;
 
-  // const todoItemType = completed ? 'DONE' : 'ACTIVE';
-  // console.log('Item-tabType::', tabType);
-  // console.log('Item-todoItemType::', todoItemType);
+  const todoItemType = completed ? 'DONE' : 'ACTIVE';
 
-  // if (tabType !== 'ALL' && tabType !== todoItemType) {
-  //   return null;
-  // }
+  if (tabType !== 'ALL' && tabType !== todoItemType) {
+    return null;
+  }
 
   const handleTodoItem = (e) => {
     const buttonType = e.target.dataset.buttontype;
@@ -48,63 +49,70 @@ function TodoItems({ todoItem, modifyTodo }) {
     return modifyTodo(id, buttonType, todo);
   };
 
+  const isChecked = completed ? 'checked' : '';
+
   return (
-    <li>
-      <p>{id}</p>
-      <p>{content}</p>
-      <p className={completed ? 'bg-slate-600' : null}>{completed}</p>
+    <li className="px-2">
+      <div className="border-b-2">
+        <div className="flex items-center justify-between py-1">
+          <label htmlFor="toggle" className="flex items-center">
+            <input
+              data-buttontype="TOGGLE"
+              type="checkbox"
+              checked={isChecked}
+              name="toggle"
+              className="mx-1"
+              onChange={handleTodoItem}
+            />
 
-      {/* React does not recognize the `data-btnType` prop on a DOM element.
-       *  If you intentionally want it to appear in the DOM
-       *  as a custom attribute, spell it as lowercase `data-btntype` instead.
-       *  If you accidentally passed it from a parent component, remove it from the DOM element. */}
-      <input
-        data-buttontype="EDIT"
-        value="EDIT"
-        type="button"
-        className="m-2 rounded bg-[#FA3] py-2 px-3 text-center text-xs font-medium text-white transition-all hover:bg-gray-200"
-        onClick={handleTodoItem}
-      />
+            <div className="px-2">
+              {!isEdit && (
+                <input
+                  data-buttontype="EDIT"
+                  value={content}
+                  type="button"
+                  className="block cursor-pointer text-black"
+                  onClick={handleTodoItem}
+                />
+              )}
 
-      {isEdit ? (
-        <>
-          <input
-            value={inputValue}
-            type="text"
-            name=""
-            id=""
-            className="bg-yellow-200"
-            onChange={(e) => {
-              console.log(e.target.value);
-              setInputValue(e.target.value);
-            }}
-          />
+              {isEdit ? (
+                <>
+                  <input
+                    value={inputValue}
+                    type="text"
+                    name="content"
+                    id="inputEdit"
+                    className="bg-yellow-200 px-2"
+                    onChange={(e) => {
+                      console.log(e.target.value);
+                      setInputValue(e.target.value);
+                    }}
+                  />
 
-          <input
-            data-buttontype="SAVE"
-            value="SAVE"
-            type="button"
-            className="m-2 rounded bg-[#333] p-2 text-white"
-            onClick={handleTodoItem}
-          />
-        </>
-      ) : null}
+                  <input
+                    data-buttontype="SAVE"
+                    value="SAVE"
+                    type="button"
+                    className="ml-2 cursor-pointer  rounded bg-[#333] py-[1px] px-1 text-white"
+                    onClick={handleTodoItem}
+                  />
+                </>
+              ) : null}
+            </div>
+          </label>
 
-      <input
-        data-buttontype="DELETE"
-        value="DELETE"
-        type="button"
-        className="m-2 rounded bg-[#F33] py-2 px-3 text-center text-xs font-medium text-white transition-all hover:bg-gray-200"
-        onClick={handleTodoItem}
-      />
-
-      <input
-        data-buttontype="TOGGLE"
-        value="TOGGLE"
-        type="button"
-        className="m-2 rounded bg-[#5EC] py-2 px-3 text-center text-xs font-medium text-white transition-all hover:bg-gray-200"
-        onClick={handleTodoItem}
-      />
+          <div className="px-2">
+            <input
+              data-buttontype="DELETE"
+              value="&times;"
+              type="button"
+              className="cursor-pointer px-2 font-bold text-slate-500"
+              onClick={handleTodoItem}
+            />
+          </div>
+        </div>
+      </div>
     </li>
   );
 }

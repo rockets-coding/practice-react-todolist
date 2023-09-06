@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-// #TODO:
-// eslint-disable-next-line object-curly-newline
+// import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useRoutes, useNavigate } from 'react-router-dom';
 
 import AuthContext from './contexts/AuthContext';
@@ -13,7 +12,6 @@ import PageSignup from './pages/PageSignup';
 import PageLogin from './pages/PageLogin';
 
 import PageTodos from './pages/PageTodos';
-import PageDev from './pages/PageDev';
 import RouteNeedAuth from './pages/RouteNeedAuth';
 /* end of import */
 
@@ -26,12 +24,15 @@ function App() {
   });
 
   useEffect(() => {
-    // console.log('render1-loadToken::', token);
     if (token) {
       console.log('#TODO: API-TestCheck()');
 
       apis.testCheck({ token }).then((res) => {
         console.log(res);
+        const { result } = res;
+        console.log(result.message);
+        // #TODO: handleError;
+        // alert(result.message);
 
         navigate('/todos');
         /**
@@ -59,10 +60,6 @@ function App() {
           element: <PageHome />,
         },
         {
-          path: '/dev',
-          element: <PageDev />,
-        },
-        {
           path: '/login',
           element: <PageLogin />,
         },
@@ -87,15 +84,30 @@ function App() {
   ]);
   /* end of useRoutes() */
 
-  // return routesConfig;
+  // const authProvideValue = useMemo(
+  //   () => ({ authProvideValue: { token, setToken } }),
+  //   [],
+  // );
+
+  const authProvideValue = useMemo(
+    () => ({
+      token,
+      setToken,
+    }),
+    [token],
+  );
+
   return (
-    <AuthContext.Provider value={{ token, setToken }}>
-      {/* <AuthContext.Provider value={{ token, setToken }}> */}
+    // <AuthContext.Provider value={authProvideValue}>
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
+    <AuthContext.Provider value={authProvideValue}>
       {/* #TODO:
        * The object passed as the value prop
        *   to the Context provider (at line 90) changes every render.
        * To fix this consider wrapping it in a useMemo hook.
+       * https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-constructed-context-values.md
        */}
+
       {routesConfig}
     </AuthContext.Provider>
   );

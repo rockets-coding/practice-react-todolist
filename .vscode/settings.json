@@ -11,5 +11,8 @@
   },
   "cSpell.words": [
     "buttontype"
-  ]
+  ],
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  }
 }

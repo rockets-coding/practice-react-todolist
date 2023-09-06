@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import useAuth from '../hooks/useAuth';
 import useInput from '../hooks/useInput';
@@ -13,6 +13,7 @@ function PageSignup() {
   // const [inputValue, setInputValue] = useState('');
   const email = useInput('');
   const password = useInput('');
+  const passwordConfirm = useInput('');
   const nickname = useInput('');
 
   const saveToken = ({ response }) => {
@@ -37,55 +38,101 @@ function PageSignup() {
     apis.usersSignUp({ user }).then((res) => {
       console.log(res);
 
-      saveToken(res);
-      // #TODO: if(res.ok)
-      navigate('/todos');
+      if (res.response.ok) {
+        saveToken(res);
+        navigate('/todos');
+      }
     });
   };
 
   return (
     <>
-      <h3>PageSignup</h3>
+      <hgroup className="mb-8">
+        <Link to="/" className="block leading-[48px]">
+          <h1 className="mb-4 overflow-hidden whitespace-nowrap bg-logo bg-[length:313px_46.9px] bg-center bg-no-repeat indent-[101%]">
+            TODOLIST
+          </h1>
+        </Link>
 
-      <main className="container p-4">
-        THIS IS PageSignup.
-        <hr />
-        <form action="" onSubmit={submitForm} className="text-center">
+        <p className="text-center text-lg font-bold">註冊帳號</p>
+      </hgroup>
+
+      <form
+        action=""
+        onSubmit={submitForm}
+        className="mx-auto flex flex-col items-center md:w-[500px]"
+      >
+        <label htmlFor="email" className="my-1 block w-full">
+          Email
           <input
             placeholder="EMAIL"
             value={email.value}
             type="email"
             name="email"
-            id=""
-            className="my-1 w-full bg-yellow-50"
+            id="email"
+            className="my-1 w-full rounded bg-yellow-50 p-1"
             onChange={email.onChange}
           />
-          <input
-            placeholder="PASSWORD"
-            value={password.value}
-            type="password"
-            name="password"
-            id=""
-            className="my-1 w-full bg-yellow-50"
-            onChange={password.onChange}
-          />
+        </label>
+
+        <label htmlFor="password" className="my-1 block w-full">
+          Nickname
           <input
             placeholder="NICKNAME"
             value={nickname.value}
             type="text"
             name="nickname"
-            id=""
-            className="my-1 w-full bg-yellow-50"
+            id="nickname"
+            className="my-1 w-full rounded bg-yellow-50 p-1"
             onChange={nickname.onChange}
           />
-          <button
-            className="m-2 rounded bg-[#333] px-4 py-1 text-white "
-            type="submit"
-          >
-            註冊
-          </button>
-        </form>
-      </main>
+        </label>
+
+        <label htmlFor="password" className="my-1 block w-full">
+          Password
+          <input
+            placeholder="PASSWORD"
+            value={password.value}
+            type="password"
+            name="password"
+            id="password"
+            className="my-1 w-full rounded bg-yellow-50 p-1"
+            onChange={password.onChange}
+          />
+        </label>
+
+        <label htmlFor="passwordConfirm" className="my-1 block w-full">
+          Password Confirm
+          <input
+            placeholder="CONFIRM"
+            value={passwordConfirm.value}
+            type="password"
+            name="passwordConfirm"
+            id="passwordConfirm"
+            className="my-1 w-full rounded bg-yellow-50 p-1"
+            onChange={passwordConfirm.onChange}
+          />
+        </label>
+
+        <button
+          className="m-2 block rounded bg-[#333] px-16 py-2 text-center text-white"
+          type="submit"
+        >
+          註冊帳號
+        </button>
+
+        <input
+          value="登入"
+          type="button"
+          name=""
+          id=""
+          className="my-2 cursor-pointer hover:scale-100"
+          onClick={() => {
+            console.log('login');
+            navigate('/login');
+          }}
+        />
+      </form>
     </>
   );
 }
